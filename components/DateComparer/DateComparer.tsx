@@ -1,6 +1,7 @@
 'use client'
 
 import { DateTimePicker } from '@mantine/dates'
+import { Grid } from '@mantine/core'
 import { useRef, useState, useEffect } from 'react'
 
 export function DateComparer() {
@@ -22,13 +23,19 @@ export function DateComparer() {
 
   return (
     <>
-      <DateTimePicker
-        onChange={handleChange}
-        value={userDate ?? defaultDate}
-        label="Date & Time at your current location"
-        valueFormat="DD MMM YYYY hh:mm:ss A"
-      />
-      <DateTimePicker label="Date & Time at your destination" />
+      <Grid>
+        <Grid.Col span={4} offset={1}>
+          <DateTimePicker
+            onChange={handleChange}
+            value={userDate ?? defaultDate}
+            label="Date & Time at your current location"
+            valueFormat="DD MMM YYYY hh:mm:ss A"
+          />
+        </Grid.Col>
+        <Grid.Col span={4} offset={1}>
+          <DateTimePicker label="Date & Time at your destination" />
+        </Grid.Col>
+      </Grid>
     </>
   )
 }
