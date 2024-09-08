@@ -1,22 +1,32 @@
 'use client'
+
 import { DateTimePicker } from '@mantine/dates'
-import { ChangeEvent, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 export function DateComparer() {
   const [defaultDate, setDefault] = useState<Date>()
-  let userDate = null
+  const [userDate, setUserDate] = useState<Date>()
+  const interval = useRef<NodeJS.Timeout>(null)
 
-  const i = setInterval(() => {
-    setDefault(new Date())
-  })
+  useEffect(() => {
+    interval.current = setInterval(() => {
+      setDefault(new Date())
+    }, 1000)
+  }, [])
+
+  const handleChange = (d: Date): void => {
+    clearInterval(interval.current)
+    interval.current = null
+    setUserDate(d)
+  }
 
   return (
     <>
       <DateTimePicker
-        onChange={(d: Date) => { clearInterval(i); userDate = d }}
-        value={userDate || defaultDate}
+        onChange={handleChange}
+        value={userDate ?? defaultDate}
         label="Date & Time at your current location"
-        valueFormat="DD MMM YYYY hh:mm:ss A" 
+        valueFormat="DD MMM YYYY hh:mm:ss A"
       />
       <DateTimePicker label="Date & Time at your destination" />
     </>
