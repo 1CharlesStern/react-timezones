@@ -14,8 +14,8 @@ export default function TimeZonePicker ({ onChange }: Props) {
     setTz(tzData[0])
   }, [])
 
-  const handleChange = (tz: Event) => {
-    setTz(tz.currentTarget.value)
+  const handleChange = (tz: string) => {
+    setTz(tz)
     onChange(tz)
   }
 
