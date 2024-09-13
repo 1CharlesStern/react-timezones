@@ -30,8 +30,16 @@ export default function DateComparer({ label, timezone }: Props) {
 
   useEffect(() => {
     interval.current = setInterval(() => {
-      setDefault(new Date(dayjs().valueOf()))
-    }, 1000)
+      console.log('incoming tz: ')
+      console.log(timezone)
+      let date = new Date(dayjs().tz(dayjs.tz.guess()).valueOf())
+      try {
+        date = new Date(dayjs().tz(timezone).valueOf())
+      } catch (e) {
+        console.log(e)
+      }
+      setDefault(date)
+    })
   }, [])
 
   return (

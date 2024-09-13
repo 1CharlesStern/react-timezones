@@ -1,21 +1,22 @@
 'use client'
 
+import { useState } from 'react'
 import { Container, Grid } from '@mantine/core'
 import SmartDateSelector from '@/components/SmartDateSelector/SmartDateSelector'
 import TimeZonePicker from '@/components/TimeZonePicker/TimeZonePicker'
+import dayjs from 'dayjs'
 
 export default function TimeZoneConverterApp () {
-  let fromTz, toTz
+  const [fromTz, setFromTz] = useState<string>(dayjs.tz.guess())
+  const [toTz, setToTz] = useState<string>(dayjs.tz.guess())
   const fromChange = (tz: string) => {
     // do conversion
-    console.log(tz)
-    fromTz = tz
+    setFromTz(tz)
   }
 
   const toChange = (tz: string) => {
     // do conversion
-    console.log(tz)
-    toTz = tz
+    setToTz(tz)
   }
 
   return (
