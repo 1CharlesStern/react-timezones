@@ -1,13 +1,12 @@
 import { Autocomplete } from '@mantine/core'
 import { useEffect, useState } from 'react'
-import ct from 'countries-and-timezones'
 
 type Props = {
   onChange: Function
 }
 
 export default function TimeZonePicker ({ onChange }: Props) {
-  const tzData = Object.keys(ct.getAllTimezones())
+  const tzData = Intl.supportedValuesOf('timeZone')
   const [tzValue, setTz] = useState<string>('')
 
   useEffect(() => {

@@ -7,11 +7,10 @@ import { useRef, useState, useEffect } from 'react'
 import '@mantine/dates/styles.css'
 
 type Props = {
-  passedDate?: Date
   label?: string
 }
 
-export default function DateComparer({ passedDate, label }: Props) {
+export default function DateComparer({ label }: Props) {
   const [defaultDate, setDefault] = useState<Date>()
   const [userDate, setUserDate] = useState<Date>()
   const interval = useRef<NodeJS.Timeout>()
@@ -26,9 +25,6 @@ export default function DateComparer({ passedDate, label }: Props) {
     interval.current = setInterval(() => {
       setDefault(new Date())
     }, 1000)
-    if (passedDate) {
-      handleChange(passedDate)
-    }
   }, [])
 
   return (
