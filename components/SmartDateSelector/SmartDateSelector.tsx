@@ -14,38 +14,23 @@ dayjs.extend(timezone)
 
 type Props = {
   label?: string
-  timezone?: string
+  timeZone?: string
 }
 
-export default function DateComparer({ label, timezone }: Props) {
-  const [defaultDate, setDefault] = useState<Date>()
+export default function DateComparer({ label, timeZone }: Props) {
   const [userDate, setUserDate] = useState<Date>()
-  const interval = useRef<NodeJS.Timeout>()
 
-  const handleChange = (d: Date): void => {
-    clearInterval(interval.current)
-    interval.current = undefined
-    setUserDate(d)
-  }
-
-  useEffect(() => {
-    interval.current = setInterval(() => {
-      console.log('incoming tz: ')
-      console.log(timezone)
-      let date = new Date(dayjs().tz(dayjs.tz.guess()).valueOf())
-      try {
-        date = new Date(dayjs().tz(timezone).valueOf())
-      } catch (e) {
-        console.log(e)
-      }
-      setDefault(date)
-    })
-  }, [])
+  let date = new Date(new Date().toLocaleString('en-US'))
+  let tzDate = new Date(date.getTime())
+  try {
+    tzDate = new Date(date.toLocaleString('en-US', { timeZone }))
+  } catch (e) {}
+  const defaultDate = tzDate
 
   return (
     <>
       <DateTimePicker
-        onChange={handleChange}
+        onChange={setUserDate}
         value={userDate ?? defaultDate}
         label={label}
         valueFormat="DD MMM YYYY hh:mm:ss A"

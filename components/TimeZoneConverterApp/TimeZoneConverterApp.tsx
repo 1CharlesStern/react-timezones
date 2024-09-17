@@ -31,13 +31,13 @@ export default function TimeZoneConverterApp () {
           <Grid.Col span={3} offset={1}>
             <SmartDateSelector
               label="Location Date/Time"
-              timezone={fromTz}
+              timeZone={fromTz}
             />
           </Grid.Col>
           <Grid.Col span={3} offset={1}>
             <SmartDateSelector
               label="Destination Date/Time"
-              timezone={toTz}
+              timeZone={toTz}
             />
           </Grid.Col>
           <Grid.Col span={2}>
