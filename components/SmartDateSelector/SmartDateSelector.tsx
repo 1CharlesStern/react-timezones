@@ -15,9 +15,11 @@ dayjs.extend(timezone)
 type Props = {
   label?: string
   timeZone?: string
+  onChange: Function
+  setTime: Date
 }
 
-export default function DateComparer({ label, timeZone }: Props) {
+export default function DateComparer({ label, timeZone, onChange, setTime }: Props) {
   const [userDate, setUserDate] = useState<Date>()
   const [defaultDate, setDefaultDate] = useState<Date>()
 
@@ -33,10 +35,27 @@ export default function DateComparer({ label, timeZone }: Props) {
     return () => clearInterval(timer)
   }, [timeZone])
 
+  const handleChange = (date: Date) => {
+    if (date.valueOf() !== userDate?.valueOf()) {
+      setUserDate(date)
+      onChange(date)
+    }
+  }
+
+  if (setTime) {
+    let formattedTime
+    try {
+      formattedTime = new Date(setTime?.toLocaleString('en-US', { timeZone }))
+    } catch(e) {}
+    if (userDate?.valueOf() !== formattedTime?.valueOf()) {
+      setUserDate(formattedTime)
+    }
+  }
+
   return (
     <>
       <DateTimePicker
-        onChange={setUserDate}
+        onChange={handleChange}
         value={userDate ?? defaultDate}
         label={label}
         valueFormat="DD MMM YYYY hh:mm:ss A"

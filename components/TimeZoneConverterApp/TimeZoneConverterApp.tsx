@@ -18,6 +18,8 @@ const TimeZonePicker = dynamic(() => import('@/components/TimeZonePicker/TimeZon
 export default function TimeZoneConverterApp () {
   const [fromTz, setFromTz] = useState<string>(dayjs.tz.guess())
   const [toTz, setToTz] = useState<string>(dayjs.tz.guess())
+  const [fromTime, setFromTime] = useState<Date>()
+  const [toTime, setToTime] = useState<Date>()
 
   return (
     <>
@@ -35,12 +37,16 @@ export default function TimeZoneConverterApp () {
             <SmartDateSelector
               label="Location Date/Time"
               timeZone={fromTz}
+              onChange={setToTime}
+              setTime={fromTime}
             />
           </Grid.Col>
           <Grid.Col span={2.75} offset={1}>
             <SmartDateSelector
               label="Destination Date/Time"
               timeZone={toTz}
+              onChange={setFromTime}
+              setTime={toTime}
             />
           </Grid.Col>
           <Grid.Col span={2.75}>
