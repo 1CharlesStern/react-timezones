@@ -19,13 +19,19 @@ type Props = {
 
 export default function DateComparer({ label, timeZone }: Props) {
   const [userDate, setUserDate] = useState<Date>()
+  const [defaultDate, setDefaultDate] = useState<Date>()
 
-  let date = new Date(new Date().toLocaleString('en-US'))
-  let tzDate = new Date(date.getTime())
-  try {
-    tzDate = new Date(date.toLocaleString('en-US', { timeZone }))
-  } catch (e) {}
-  const defaultDate = tzDate
+  useEffect(() => {
+    const timer = setInterval(() => {
+      let updatedDate = new Date(new Date().toLocaleString('en-US'))
+      try {
+        updatedDate = new Date(new Date().toLocaleString('en-US', { timeZone }))
+      } catch (e) {}
+      setDefaultDate(updatedDate)
+    }, 1000)
+  
+    return () => clearInterval(timer)
+  }, [timeZone])
 
   return (
     <>
